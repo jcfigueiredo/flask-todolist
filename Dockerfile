@@ -1,7 +1,9 @@
 FROM alpine:3.8
 
 # from https://github.com/frol/docker-alpine-python3
-RUN apk add --no-cache python3 && \
+RUN apk update && apk upgrade && \
+    apk add --no-cache python3-dev && \
+    apk add --no-cache gcc postgresql-dev musl-dev  && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools && \

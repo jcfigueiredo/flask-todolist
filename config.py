@@ -6,7 +6,7 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
 def create_sqlite_uri(db_name):
-    return 'sqlite:///' + os.path.join(BASEDIR, db_name)
+    return os.environ.get('SQLALCHEMY_DATABASE_URI') or 'sqlite:///' + os.path.join(BASEDIR, db_name)
 
 
 class Config(object):
