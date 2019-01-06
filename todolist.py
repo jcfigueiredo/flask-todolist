@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from IPython.utils import data
 from flask import current_app
 from sqlalchemy_utils import database_exists, create_database
 

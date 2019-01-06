@@ -18,7 +18,8 @@ services:
     build: .
     image: todolist
     env_file: .env
-    command: flask db upgrade
+    command: >
+      sh -c "flask create-db && flask db upgrade"
     depends_on:
       - db
     volumes:
