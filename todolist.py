@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from IPython.utils import data
+from flask import current_app
+from sqlalchemy_utils import database_exists, create_database
 
 from app import create_app
 
@@ -24,3 +27,13 @@ def fill_db():
     """
     from utils.fake_generator import FakeGenerator
     FakeGenerator().start()  # side effect: deletes existing data
+
+
+@app.cli.command()
+def create_db(*args, **kwargs):
+    """Creates database with the name.
+    """
+    with app.app_context():
+        url = current_app.extensions['sqlalchemy'].db.engine.url
+        if not database_exists(url):
+            create_database(url)
