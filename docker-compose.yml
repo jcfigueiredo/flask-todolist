@@ -2,6 +2,7 @@ version: '3'
 services:
   todolist:
     container_name: todolist
+    build: .
     image: todolist
     # restart: always
     env_file: .env
@@ -15,7 +16,6 @@ services:
 
   migration:
     container_name: migration
-    build: .
     image: todolist
     env_file: .env
     command: >
@@ -27,6 +27,7 @@ services:
 
   db:
     image: postgres:9.6.6
+    container_name: db
     ports:
       - '0.0.0.0:5432:5432'
     volumes:

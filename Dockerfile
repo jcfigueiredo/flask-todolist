@@ -11,7 +11,12 @@ RUN apk update && apk upgrade && \
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
     rm -r /root/.cache
 
-ADD . /code
-WORKDIR /code
 RUN pip install gunicorn
+
+ADD requirements.txt /code/requirements.txt
+
+WORKDIR /code
+
 RUN pip install -r requirements.txt
+
+ADD . /code
