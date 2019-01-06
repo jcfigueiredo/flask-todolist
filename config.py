@@ -5,8 +5,8 @@ import os
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
-def create_sqlite_uri(db_name):
-    return os.environ.get('SQLALCHEMY_DATABASE_URI') or 'sqlite:///' + os.path.join(BASEDIR, db_name)
+def create_uri(db_name, use_sqlite=False):
+    return os.environ.get('SQLALCHEMY_DATABASE_URI') or f'sqlite:///{os.path.join(BASEDIR, db_name)}.db'
 
 
 class Config(object):
@@ -22,12 +22,12 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = create_sqlite_uri('todolist-dev.db')
+    SQLALCHEMY_DATABASE_URI = create_uri('todolist-dev')
 
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = create_sqlite_uri('todolist-test.db')
+    SQLALCHEMY_DATABASE_URI = create_uri('todolist-test')
     WTF_CSRF_ENABLED = False
     import logging
     logging.basicConfig(
@@ -37,7 +37,7 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = create_sqlite_uri('todolist.db')
+    SQLALCHEMY_DATABASE_URI = create_uri('todolist')
 
 
 config = {
