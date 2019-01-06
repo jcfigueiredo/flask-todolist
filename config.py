@@ -5,7 +5,7 @@ import os
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
-def create_uri(db_name, use_sqlite=False):
+def create_uri(db_name):
     return os.environ.get('SQLALCHEMY_DATABASE_URI') or f'sqlite:///{os.path.join(BASEDIR, db_name)}.db'
 
 
