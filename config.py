@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+import logging, logging.config
+import yaml
 
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -17,7 +19,13 @@ class Config(object):
 
     @staticmethod
     def init_app(app):
-        pass
+        logging_conf_path = os.path.join(os.path.abspath(os.path.curdir), 'logging.yml')
+
+        with open(logging_conf_path, 'r') as stream:
+            try:
+                logging.config.dictConfig(yaml.load(stream))
+            except yaml.YAMLError as exc:
+                print(exc)
 
 
 class DevelopmentConfig(Config):
@@ -29,11 +37,6 @@ class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = create_uri('todolist-test')
     WTF_CSRF_ENABLED = False
-    import logging
-    logging.basicConfig(
-        format='%(asctime)s:%(levelname)s:%(name)s:%(message)s'
-    )
-    logging.getLogger().setLevel(logging.DEBUG)
 
 
 class ProductionConfig(Config):
